@@ -15,5 +15,26 @@ namespace CapaNegocio
         {
             return objCapaDato.Listar();
         }
+
+        public int Registrar(Rubros obj, out string Mensaje)
+        {
+            Mensaje = string.Empty;
+            if (string.IsNullOrEmpty(obj.Codigo) || string.IsNullOrWhiteSpace(obj.Codigo))
+            {
+                Mensaje = "Ingresar Codigo";
+            }
+            if (string.IsNullOrEmpty(Mensaje))
+            {
+                return objCapaDato.Registrar(obj);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+
     }
+
+   
 }

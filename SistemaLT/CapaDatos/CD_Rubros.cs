@@ -45,5 +45,38 @@ namespace CapaDatos
             }
             return lista;
         }
+
+        public int Registrar(Rubros obj)
+        {
+            string Mensaje;
+            int idautogenerado = 0;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    SqlCommand cmd = new SqlCommand("T_InsertarProv", oconexion);
+                    cmd.Parameters.AddWithValue("IdRubro", obj.IdRubro);
+                    cmd.Parameters.AddWithValue("Codigo", obj.Codigo);
+                    cmd.Parameters.AddWithValue("Activo", obj.Activo);
+                    cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
+                    cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    oconexion.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                    idautogenerado = Convert.ToInt32(cmd.Parameters["resultado"].Value);
+                    Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Mensaje = ex.Message;
+                idautogenerado = 0;
+            }
+            return idautogenerado;
+        }
     }
 }
