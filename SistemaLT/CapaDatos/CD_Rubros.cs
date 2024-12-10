@@ -54,8 +54,8 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("T_InsertarProv", oconexion);
-                    cmd.Parameters.AddWithValue("IdRubro", obj.IdRubro);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarRubro", oconexion);
+                    cmd.Parameters.AddWithValue("Rubro", obj.Rubro);
                     cmd.Parameters.AddWithValue("Codigo", obj.Codigo);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
@@ -77,6 +77,40 @@ namespace CapaDatos
                 idautogenerado = 0;
             }
             return idautogenerado;
+        }
+
+        public bool Editar(Rubros obj, out string Mensaje)
+        {
+            bool resultado = false;
+            Mensaje = string.Empty;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    SqlCommand cmd = new SqlCommand("sp_EditarRubro", oconexion);
+                    cmd.Parameters.AddWithValue("IdRubro", obj.IdRubro);
+                    cmd.Parameters.AddWithValue("Rubro", obj.Rubro);
+                    cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
+                    cmd.Parameters.AddWithValue("Codigo", obj.Codigo);
+                    cmd.Parameters.AddWithValue("Activo", obj.Activo);
+                    cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    oconexion.Open();
+
+                    cmd.ExecuteNonQuery();
+                    resultado = Convert.ToBoolean(cmd.Parameters["Resultado"].Value);
+                    Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                Mensaje = ex.Message;
+            }
+            return resultado;
+
         }
     }
 }
