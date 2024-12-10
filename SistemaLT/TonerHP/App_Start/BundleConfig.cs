@@ -16,6 +16,8 @@ namespace TonerHP
                         "~/Scripts/DataTables/jdataTables.responsive.js",
                         "~/Scripts/loadingoverlay/loadingoverlay.min.js",
                         "~/Scripts/sweetalert.min.js",
+                        "~/Scripts/Datepicker.js",
+                        "~/Scripts/jquery-ui.js",
                         "~/Scripts/scripts.js"
                         ));
 
@@ -34,7 +36,10 @@ namespace TonerHP
                       "~/Content/site.css",
                       "~/Content/DataTables/css/jquery.dataTables.css",
                       "~/Content/DataTables/css/responsive.dataTables.css",
-                      "~/Content/sweetalert.css"
+                      "~/Content/images",
+                      "~/Content/sweetalert.css",
+                      "~/Content/jquery-ui.min.css"
+
                       ));
         }
     }
