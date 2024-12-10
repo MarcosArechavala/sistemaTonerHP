@@ -29,15 +29,15 @@ namespace CapaDatos
                         {
                             lista.Add(new Rubros()
                             {
-                                IdRubro = Convert.ToInt32(rdr["Idrubro"]),
-                                Rubro= rdr["Rubro"].ToString(),
+                                IdRubro = Convert.ToInt32(rdr["IdRubro"]),
+                                Rubro = rdr["Rubro"].ToString(),
                                 Codigo = rdr["Codigo"].ToString(),
                                 Activo = Convert.ToBoolean(rdr["Activo"]),
                                 IdUsuario = Convert.ToInt32(rdr["IdUsuario"])
                             });
                         }
                     }
-                    
+
                 }
             } catch
             {
