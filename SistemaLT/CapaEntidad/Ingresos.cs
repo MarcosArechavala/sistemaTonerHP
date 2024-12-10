@@ -30,6 +30,6 @@ namespace CapaEntidad
         public int IdUsuario { get; set; }
         public Productos oStockActual {  get; set; }
         public char TipoIngreso { get; set; }
-        public DateTime FechaIngreso { get; set; }
+        public string FechaIngreso { get; set; }
     }
 }
