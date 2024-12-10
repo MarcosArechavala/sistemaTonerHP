@@ -43,7 +43,8 @@ namespace CapaDatos
                                 Cantidad = Convert.ToInt32(rdr["Cantidad"]),
                                 Observaciones = rdr["Observaciones"].ToString(),
                                 TipoIngreso = Convert.ToChar(rdr["TipoIngreso"]),
-                                FechaIngreso = Convert.ToDateTime(rdr["FechaIngreso"]),
+                                IdUsuario = Convert.ToInt32(rdr["IdUsuario"]),
+                                FechaIngreso = rdr["FechaIngreso"].ToString(),
 
                             });
                         }
@@ -56,5 +57,71 @@ namespace CapaDatos
             return lista;
         }
 
+
+        public int Registrar(Ingresos obj)
+        {
+            string Mensaje;
+            int idautogenerado = 0;
+            using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+            {
+                SqlCommand cmd = new SqlCommand("T_InsertarIngresos", oconexion);
+                cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
+                cmd.Parameters.AddWithValue("IdTipo", obj.oProductos.IdProducto);
+                cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
+                cmd.Parameters.AddWithValue("CodigoId", obj.CodigoId);
+                cmd.Parameters.AddWithValue("Observaciones", obj.CodigoId);
+                cmd.Parameters.AddWithValue("TipoIngreso", obj.CodigoId);
+                cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
+                cmd.Parameters.AddWithValue("FechaIngreso", obj.FechaIngreso);
+                cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                oconexion.Open();
+
+                cmd.ExecuteNonQuery();
+
+                idautogenerado = Convert.ToInt32(cmd.Parameters["resultado"].Value);
+                Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+            }
+            return idautogenerado;
+        }
+
+        public bool Editar(Ingresos obj, out string Mensaje)
+        {
+            bool resultado = false;
+            Mensaje = string.Empty;
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                {
+                    SqlCommand cmd = new SqlCommand("T_ModificarProductos", oconexion);
+                    cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
+                    cmd.Parameters.AddWithValue("IdTipo", obj.oProductos.IdProducto);
+                    cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
+                    cmd.Parameters.AddWithValue("CodigoId", obj.CodigoId);
+                    cmd.Parameters.AddWithValue("Observaciones", obj.CodigoId);
+                    cmd.Parameters.AddWithValue("TipoIngreso", obj.CodigoId);
+                    cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
+                    cmd.Parameters.AddWithValue("FechaIngreso", obj.FechaIngreso);
+                    cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    oconexion.Open();
+
+                    cmd.ExecuteNonQuery();
+                    resultado = Convert.ToBoolean(cmd.Parameters["Resultado"].Value);
+                    Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                Mensaje = ex.Message;
+            }
+            return resultado;
+
+        }
     }
 }

@@ -93,10 +93,10 @@ namespace CapaNegocio
             {
                 Mensaje = "Ingresar usuario";
             }
-            else if (obj.Activo == true || obj.Activo == false)
-            {
-                Mensaje = "Ingrese activo o desactivado";
-            }
+            //else if (obj.Activo == true || obj.Activo == false)
+            //{
+            //    Mensaje = "Ingrese activo o desactivado";
+            //}
 
             if (string.IsNullOrEmpty(Mensaje))
             {

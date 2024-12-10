@@ -104,6 +104,7 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
                     SqlCommand cmd = new SqlCommand("T_ModificarProductos", oconexion);
+                    cmd.Parameters.AddWithValue("IdProducto", obj.IdProducto);
                     cmd.Parameters.AddWithValue("IdRubro", obj.oRubros.IdRubro);
                     cmd.Parameters.AddWithValue("IdTipo", obj.oTipos.IdTipo);
                     cmd.Parameters.AddWithValue("Detalle", obj.Detalle);
