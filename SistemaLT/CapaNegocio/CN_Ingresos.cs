@@ -43,10 +43,6 @@ namespace CapaNegocio
             {
                 Mensaje = "Ingresar codigo";
             }
-            else if (string.IsNullOrEmpty(objeto.Observaciones) || string.IsNullOrWhiteSpace(objeto.Observaciones))
-            {
-                Mensaje = "Ingresar codigo";
-            }
             else if (!IsAlphanumeric(objeto.Observaciones))
             {
                 Mensaje = "Las observaciones solo pueden contener letras y números.";

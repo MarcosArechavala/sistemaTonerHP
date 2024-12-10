@@ -227,13 +227,13 @@
             $("#cbodetalle").val("");
             $("#cboproveedores").val("");
             $("#txtcantidad").val("");
+            $("#cbostockactual").val("");
             $("#txtcodigoid").val("");
             $("#txttipoingreso").val("");
             $('#txtfechaingreso').datepicker({
                 minDate: "-30D",
                 maxDate: 0
             });
-            //$("#txtfechaingreso").datepicker();
             $("#txtobservaciones").val("");
             $("#txtusuario").val("");
             $("#mensajeError").hide();
@@ -244,6 +244,7 @@
                 $("#cbodetalle").val(json.oProductos.IdProducto);
                 $("#cboproveedores").val(json.oProveedores.IdProveedor);
                 $("#txtcantidad").val(json.Cantidad);
+                $("#cbostockactual").val(json.StockActual);
                 $("#txtcodigoid").val(json.CodigoId);
                 $("#txttipoingreso").val(json.TipoIngreso);
                 $("#txtfechaingreso").datepicker(json.FechaIngreso);
@@ -270,7 +271,7 @@
                    Detalle: $("#cbodetalle option:selected").text(),
                },
                oProveedores: {
-                   IdProveedores: $("#cboproveedores option:selected").val(),
+                   IdProveedor: $("#cboproveedores option:selected").val(),
                    RazonSocial: $("#cboproveedores option:selected").text(),
                 },
                 Cantidad: $("#txtcantidad").val(),
