@@ -74,23 +74,23 @@ namespace TonerHP.Controllers
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        [HttpPost]
+        //[HttpPost]
 
-        public JsonResult GuardarRubros(Rubros objeto)
-        {
-            object resultado;
-            string mensaje = string.Empty;
+        //public JsonResult GuardarRubros(Rubros objeto)
+        //{
+        //    object resultado;
+        //    string mensaje = string.Empty;
 
-            if (objeto.IdRubro == 0)
-            {
-                resultado = new CN_Rubros().Registrar(objeto, out mensaje);
-            }
-            else
-            {
-                resultado = new CN_Rubros().Editar(objeto, out mensaje);
-            }
-            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
-        }
+        //    if (objeto.IdRubro == 0)
+        //    {
+        //        resultado = new CN_Rubros().Registrar(objeto, out mensaje);
+        //    }
+        //    else
+        //    {
+        //        resultado = new CN_Rubros().Editar(objeto, out mensaje);
+        //    }
+        //    return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        //}
 
         //PROVEEDORES
         #region PROVEEDORES

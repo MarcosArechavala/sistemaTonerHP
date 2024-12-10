@@ -21,7 +21,7 @@ namespace CapaDatos
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("SELECT i.IdIngreso,");
                     sb.AppendLine("p.IdProveedor, p.RazonSocial,");
-                    sb.AppendLine("prod.IdProducto, prod.Detalle, prod.StockActual,");
+                    sb.AppendLine("prod.IdProducto, prod.Detalle, COALESCE(prod.StockActual, 0) AS StockActual,");
                     sb.AppendLine("i.CodigoId,i.Cantidad,i.Observaciones,i.IdUsuario,i.TipoIngreso,i.FechaIngreso");
                     sb.AppendLine("FROM Tonner_Ingresos i ");
                     sb.AppendLine("inner join Tonner_Proveedor p on p.IdProveedor = i.IdProveedor");
@@ -36,6 +36,7 @@ namespace CapaDatos
                         {
                             lista.Add(new Ingresos()
                             {
+                                IdIngreso = Convert.ToInt32(rdr["IdIngreso"]),
                                 oProveedores = new Proveedores() { IdProveedor = Convert.ToInt32(rdr["IdProveedor"]), RazonSocial = rdr["RazonSocial"].ToString() },
                                 oProductos = new Productos() { IdProducto = Convert.ToInt32(rdr["IdProducto"]), Detalle = rdr["Detalle"].ToString() },
                                 oStockActual = new Productos() { IdProducto = Convert.ToInt32(rdr["IdProducto"]), StockActual = Convert.ToInt32(rdr["StockActual"]) },
@@ -60,7 +61,7 @@ namespace CapaDatos
 
         public int Registrar(Ingresos obj)
         {
-            string Mensaje;
+            //string Mensaje;
             int idautogenerado = 0;
             using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
             {
