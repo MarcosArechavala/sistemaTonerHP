@@ -41,7 +41,7 @@ namespace TonerHP.Controllers
             oLista = new CN_Rubros().Listar();
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
-        #endregion
+
         [HttpPost]
 
         public JsonResult GuardarRubros(Rubros objeto)
@@ -59,6 +59,10 @@ namespace TonerHP.Controllers
             }
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+
+
 
         //PROVEEDORES
 
