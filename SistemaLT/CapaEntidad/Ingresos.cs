@@ -28,7 +28,7 @@ namespace CapaEntidad
         public int Cantidad { get; set; }
         public string Observaciones { get; set; }
         public int IdUsuario { get; set; }
-        public Productos oStockActual {  get; set; }
+        public Productos oStockActual { get; set; }
         public char TipoIngreso { get; set; }
         public string FechaIngreso { get; set; }
     }

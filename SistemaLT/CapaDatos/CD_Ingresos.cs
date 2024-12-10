@@ -66,15 +66,15 @@ namespace CapaDatos
             {
                 SqlCommand cmd = new SqlCommand("T_InsertarIngresos", oconexion);
                 cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
-                cmd.Parameters.AddWithValue("IdTipo", obj.oProductos.IdProducto);
+                cmd.Parameters.AddWithValue("IdProducto", obj.oProductos.IdProducto);
                 cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
                 cmd.Parameters.AddWithValue("CodigoId", obj.CodigoId);
-                cmd.Parameters.AddWithValue("Observaciones", obj.CodigoId);
-                cmd.Parameters.AddWithValue("TipoIngreso", obj.CodigoId);
+                cmd.Parameters.AddWithValue("Observaciones", obj.Observaciones);
+                cmd.Parameters.AddWithValue("TipoIngreso", obj.TipoIngreso);
                 cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
                 cmd.Parameters.AddWithValue("FechaIngreso", obj.FechaIngreso);
                 cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                //cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 oconexion.Open();
@@ -82,7 +82,7 @@ namespace CapaDatos
                 cmd.ExecuteNonQuery();
 
                 idautogenerado = Convert.ToInt32(cmd.Parameters["resultado"].Value);
-                Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                //Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
             }
             return idautogenerado;
         }
@@ -96,11 +96,12 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
                     SqlCommand cmd = new SqlCommand("T_ModificarProductos", oconexion);
+                    cmd.Parameters.AddWithValue("IdIngresos", obj.IdIngreso);
                     cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
                     cmd.Parameters.AddWithValue("IdTipo", obj.oProductos.IdProducto);
                     cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
                     cmd.Parameters.AddWithValue("CodigoId", obj.CodigoId);
-                    cmd.Parameters.AddWithValue("Observaciones", obj.CodigoId);
+                    cmd.Parameters.AddWithValue("Observaciones", obj.Observaciones);
                     cmd.Parameters.AddWithValue("TipoIngreso", obj.CodigoId);
                     cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
                     cmd.Parameters.AddWithValue("FechaIngreso", obj.FechaIngreso);
