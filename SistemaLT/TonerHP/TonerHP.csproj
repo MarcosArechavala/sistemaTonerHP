@@ -502,11 +502,7 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Toner\Tipos.cshtml" />
     <Content Include="Views\Toner\Productos.cshtml" />
- 
-    <Content Include="Views\Toner\Ingresos.cshtml" />
-
     <Content Include="Views\Toner\Rubros.cshtml" />
- 
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
