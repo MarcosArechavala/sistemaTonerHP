@@ -307,6 +307,22 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_15_0b3e6f_40x40.png" />
+    <Content Include="Content\images\ui-bg_dots-medium_30_0b58a2_4x4.png" />
+    <Content Include="Content\images\ui-bg_dots-small_20_333333_2x2.png" />
+    <Content Include="Content\images\ui-bg_dots-small_30_a32d00_2x2.png" />
+    <Content Include="Content\images\ui-bg_dots-small_40_00498f_2x2.png" />
+    <Content Include="Content\images\ui-bg_gloss-wave_20_111111_500x100.png" />
+    <Content Include="Content\images\ui-icons_00498f_256x240.png" />
+    <Content Include="Content\images\ui-icons_98d2fb_256x240.png" />
+    <Content Include="Content\images\ui-icons_9ccdfc_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
@@ -427,6 +443,7 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
+    <Content Include="Scripts\Datepicker.js" />
     <Content Include="Scripts\fontawesome\all.js" />
     <Content Include="Scripts\fontawesome\all.min.js" />
     <Content Include="Scripts\fontawesome\brands.js" />
@@ -446,6 +463,8 @@
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -483,6 +502,7 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Toner\Tipos.cshtml" />
     <Content Include="Views\Toner\Productos.cshtml" />
+    <Content Include="Views\Toner\Rubros.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

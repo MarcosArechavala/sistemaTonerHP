@@ -26,6 +26,38 @@ namespace TonerHP.Controllers
         {
             return View();
         }
+
+        public ActionResult Ingresos()
+        {
+            return View();
+        }
+
+        //INGRESOS
+        #region INGRESOS
+        [HttpGet]
+        public JsonResult ListarIngresos()
+        {
+            List<Ingresos> oLista = new List<Ingresos>();
+            oLista = new CN_Ingresos().Listar();
+            return Json(new {data= oLista}, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GuardarIngreso(Ingresos objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+
+            if (objeto.IdIngreso == 0)
+            {
+                resultado = new CN_Ingresos().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Ingresos().Editar(objeto, out mensaje);
+            }
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
         //RUBROS
 
         #region RUBROS
@@ -37,6 +69,7 @@ namespace TonerHP.Controllers
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        [HttpPost]
 
         [HttpPost]
         public JsonResult EliminarRubros(int id)
@@ -47,9 +80,12 @@ namespace TonerHP.Controllers
             return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
 
         }
+        #endregion
+
+
+
 
         //PROVEEDORES
-
         #region PROVEEDORES
         [HttpGet]
         public JsonResult ListarProveedores()

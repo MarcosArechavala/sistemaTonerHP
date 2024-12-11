@@ -179,7 +179,9 @@
                     $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cborubro");
 
                     $.each(data.data, function (index, valor) {
-                        $("<option>").attr({ "value": valor.IdRubro }).text(valor.Rubro).appendTo("#cborubro");
+                        if (valor.Activo == true) {
+                            $("<option>").attr({ "value": valor.IdRubro }).text(valor.Rubro).appendTo("#cborubro");
+                        }
                     })
                 },
                 error: function (error) {
@@ -198,7 +200,9 @@
                     $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbotipo");
 
                     $.each(data.data, function (index, valor) {
-                        $("<option>").attr({ "value": valor.IdTipo }).text(valor.Tipo).appendTo("#cbotipo");
+                        if (valor.Activo == true) {
+                            $("<option>").attr({ "value": valor.IdTipo }).text(valor.Tipo).appendTo("#cbotipo");
+                        }
                     })
                 },
                 error: function (error) {
@@ -223,8 +227,8 @@
             if (json != null) {
                 $("#txtid").val(json.IdProducto);
                 $("#txtdetalle").val(json.Detalle);
-                $("#cborubro").val(json.IdRubro);
-                $("#cbotipo").val(json.IdTipo);
+                $("#cborubro").val(json.oRubros.IdRubro);
+                $("#cbotipo").val(json.oTipos.IdTipo);
                 $("#txtstockminimo").val(json.StockMinimo);
                 $("#txtcodigoid").val(json.CodigoId);
                 $("#txtusuario").val(json.IdUsuario);

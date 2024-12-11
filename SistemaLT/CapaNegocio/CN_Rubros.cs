@@ -11,17 +11,20 @@ namespace CapaNegocio
     public class CN_Rubros
     {
         private CD_Rubros objCapaDato = new CD_Rubros();
+
+
         public List<Rubros> Listar()
         {
             return objCapaDato.Listar();
         }
 
+
         public int Registrar(Rubros obj, out string Mensaje)
         {
             Mensaje = string.Empty;
-            if (string.IsNullOrEmpty(obj.Codigo) || string.IsNullOrWhiteSpace(obj.Codigo))
+            if (string.IsNullOrEmpty(obj.Rubro) || string.IsNullOrWhiteSpace(obj.Rubro))
             {
-                Mensaje = "Ingresar Codigo";
+                Mensaje = "Ingresar Rubro";
             }
             if (string.IsNullOrEmpty(Mensaje))
             {
@@ -32,6 +35,27 @@ namespace CapaNegocio
                 return 0;
             }
         }
+
+        public bool Editar(Rubros obj, out string Mensaje)
+        {
+            Mensaje = string.Empty;
+            if (string.IsNullOrEmpty(obj.Rubro) || string.IsNullOrWhiteSpace(obj.Rubro))
+            {
+                Mensaje = "Rubro";
+            }
+            if (string.IsNullOrEmpty(Mensaje))
+            {
+                return objCapaDato.Editar(obj, out Mensaje);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        
+
+       
 
 
     }
