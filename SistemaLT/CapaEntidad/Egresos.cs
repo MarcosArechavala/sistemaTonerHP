@@ -22,15 +22,22 @@ namespace CapaEntidad
 
     public class Egresos
     {
-        public int IdEgreso { get; set; }
+
         public Productos oProductos { get; set; }
+        
+
+        public int IdEgreso { get; set; }
+        
         public string CodigoId { get; set; }
         public int Cantidad {  get; set; }
         public string Observaciones { get; set; }
         public int IdUsuario { get; set; }
-        public int StockActual { get; set; }
-        public int Area { get; set; }
-        public int Sector { get; set; }
+
+        public Productos oStockActual { get; set; }
+
+        public DateTime FechaEgreso { get; set; }
+        public int CodigoArea { get; set; }
+        public int CodigoSector { get; set; }
         public char TipoSalida { get; set; }
     }
 }

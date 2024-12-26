@@ -14,9 +14,16 @@ namespace CapaNegocio
         // Método para verificar si la cadena es alfanumérica
         private bool IsAlphanumeric(string input)
         {
+            if (input == null)
+            {
+                return true; // O false, dependiendo de tu lógica de negocio
+            }
+
             // Expresión regular que permite solo letras y números
-            return Regex.IsMatch(input, "^[a-zA-Z0-9]*$");
+            return Regex.IsMatch(input, "^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ ]*$");
         }
+
+
 
         private CD_Ingresos objCapaDato = new CD_Ingresos();
 
@@ -25,36 +32,44 @@ namespace CapaNegocio
             return objCapaDato.Listar();
         }
 
-        public int Registrar(Ingresos objeto, out string Mensaje)
+        public int Registrar(Ingresos obj, out string Mensaje)
         {
             Mensaje = string.Empty;
 
-            if (objeto.oProveedores.IdProveedor == 0)
+            if (obj.oProveedores.IdProveedor == 0)
             {
                 Mensaje = "Ingresar proveedor o razon social";
             }
 
-            else if (objeto.oProductos.IdProducto == 0)
+            else if (obj.oProductos.IdProducto == 0)
             {
                 Mensaje = "Ingresar producto";
             }
 
-            else if (string.IsNullOrEmpty(objeto.CodigoId) || string.IsNullOrWhiteSpace(objeto.CodigoId))
+            else if (!IsAlphanumeric(obj.CodigoId))
             {
-                Mensaje = "Ingresar codigo";
+                Mensaje = "CodigoId solo pueden contener letras y números";
             }
-            else if (!IsAlphanumeric(objeto.Observaciones))
+            else if (char.IsWhiteSpace(obj.TipoIngreso))
             {
-                Mensaje = "Las observaciones solo pueden contener letras y números.";
+                Mensaje = "Ingresar el tipo de ingreso";
             }
-            else if (objeto.IdUsuario == 0)
+            else if (!IsAlphanumeric(obj.Observaciones))
+            {
+                Mensaje = "Observaciones solo pueden contener letras y números.";
+            }
+            else if (obj.Cantidad < 0)
+            {
+                Mensaje = "Cantidad debe ser un número positivo.";
+            }
+            else if (obj.IdUsuario == 0)
             {
                 Mensaje = "Ingresar usuario";
             }
 
             if (string.IsNullOrEmpty(Mensaje))
             {
-                return objCapaDato.Registrar(objeto);
+                return objCapaDato.Registrar(obj);
             }
             else
             {
@@ -63,39 +78,48 @@ namespace CapaNegocio
 
         }
 
-        public bool Editar(Ingresos objeto, out string Mensaje)
+        public bool Editar(Ingresos obj, out string Mensaje)
         {
             Mensaje = string.Empty;
-            if (objeto.oProveedores.IdProveedor == 0)
+            if (obj.oProveedores.IdProveedor == 0)
             {
                 Mensaje = "Ingresar proveedor o razon social";
             }
 
-            else if (objeto.oProductos.IdProducto == 0)
+            else if (obj.oProductos.IdProducto == 0)
             {
                 Mensaje = "Ingresar producto";
             }
 
-            else if (string.IsNullOrEmpty(objeto.CodigoId) || string.IsNullOrWhiteSpace(objeto.CodigoId))
+            else if (!IsAlphanumeric(obj.CodigoId))
             {
-                Mensaje = "Ingresar codigo";
+                Mensaje = "CodigoId solo pueden contener letras y números";
             }
-
-            else if (string.IsNullOrEmpty(objeto.Observaciones) || string.IsNullOrWhiteSpace(objeto.Observaciones))
+            else if (char.IsWhiteSpace(obj.TipoIngreso))
             {
-                Mensaje = "Ingresar codigo";
+                Mensaje = "Ingresar el tipo de ingreso";
+            }
+            else if (!IsAlphanumeric(obj.Observaciones))
+            {
+                Mensaje = "Observaciones solo pueden contener letras y números.";
+            }
+            else if (obj.IdUsuario == 0)
+            {
+                Mensaje = "Ingresar usuario";
+            }
+            else if (obj.Cantidad < 0)
+            {
+                Mensaje = "Cantidad debe ser un número positivo.";
             }
 
             if (string.IsNullOrEmpty(Mensaje))
             {
-                return objCapaDato.Editar(objeto, out Mensaje);
+                return objCapaDato.Editar(obj, out Mensaje);
             }
             else
             {
                 return false;
             }
-
-
 
 
         }

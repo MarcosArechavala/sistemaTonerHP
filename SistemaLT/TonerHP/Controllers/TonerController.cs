@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CapaEntidad;
 using CapaNegocio;
+using Newtonsoft.Json;
 
 
 namespace TonerHP.Controllers
 {
     public class TonerController : Controller
     {
+
+
         // GET: Toner
         public ActionResult Proveedores()
         {
@@ -31,7 +36,10 @@ namespace TonerHP.Controllers
         {
             return View();
         }
-
+        public ActionResult Rubros()
+        {
+            return View();
+        }
         //INGRESOS
         #region INGRESOS
         [HttpGet]
@@ -58,13 +66,8 @@ namespace TonerHP.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         //RUBROS
-        public ActionResult Rubros()
-        {
-            return View();
-        }
-
-
         #region RUBROS
         [HttpGet]
         public JsonResult ListarRubros()
@@ -73,24 +76,26 @@ namespace TonerHP.Controllers
             oLista = new CN_Rubros().Listar();
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
-
+        #endregion
         [HttpPost]
 
-        //public JsonResult GuardarRubros(Rubros objeto)
-        //{
-        //    object resultado;
-        //    string mensaje = string.Empty;
+<<<<<<< HEAD
+        public JsonResult GuardarRubros(Rubros objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+=======
+        [HttpPost]
+        public JsonResult EliminarRubros(int id)
+        {
+            bool respuesta = false;
+            string mensaje = string.Empty;
+            respuesta = new CN_Rubros().Eliminar(id, out mensaje);
+            return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+>>>>>>> b265af2321636422da77fc594ef5084157934ee7
 
-            if (objeto.IdRubro == 0)
-            {
-                resultado = new CN_Rubros().Registrar(objeto, out mensaje);
-            }
-            else
-            {
-                resultado = new CN_Rubros().Editar(objeto, out mensaje);
-            }
-            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         //PROVEEDORES
         #region PROVEEDORES
@@ -130,6 +135,7 @@ namespace TonerHP.Controllers
 
         }
         #endregion
+
         //TIPOS
         #region TIPOS
         [HttpGet]
@@ -197,6 +203,34 @@ namespace TonerHP.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+
+        //Egresos
+        #region Egresos
+        [HttpGet]
+        public JsonResult ListarEgresos()
+        {
+            List<Egresos> oLista = new List<Egresos>();
+            oLista = new CN_Egresos().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GuardarEgresos(Egresos objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+
+            if (objeto.IdEgreso == 0)
+            {
+                resultado = new CN_Egresos().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Egresos().Editar(objeto, out mensaje);
+            }
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }
