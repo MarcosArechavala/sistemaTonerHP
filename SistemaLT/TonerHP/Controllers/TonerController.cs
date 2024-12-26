@@ -36,10 +36,7 @@ namespace TonerHP.Controllers
         {
             return View();
         }
-        public ActionResult Rubros()
-        {
-            return View();
-        }
+
         //INGRESOS
         #region INGRESOS
         [HttpGet]
@@ -196,6 +193,34 @@ namespace TonerHP.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+
+        //Egresos
+        #region Egresos
+        [HttpGet]
+        public JsonResult ListarEgresos()
+        {
+            List<Egresos> oLista = new List<Egresos>();
+            oLista = new CN_Egresos().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GuardarEgresos(Egresos objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+
+            if (objeto.IdEgreso == 0)
+            {
+                resultado = new CN_Egresos().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Egresos().Editar(objeto, out mensaje);
+            }
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }
