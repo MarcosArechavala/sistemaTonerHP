@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using CapaEntidad;
 using CapaNegocio;
+using Newtonsoft.Json;
 
 
 namespace TonerHP.Controllers
 {
     public class TonerController : Controller
     {
+
+
         // GET: Toner
         public ActionResult Proveedores()
         {
@@ -31,7 +36,10 @@ namespace TonerHP.Controllers
         {
             return View();
         }
-
+        public ActionResult Rubros()
+        {
+            return View();
+        }
         //INGRESOS
         #region INGRESOS
         [HttpGet]
@@ -58,8 +66,8 @@ namespace TonerHP.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-        //RUBROS
 
+        //RUBROS
         #region RUBROS
         [HttpGet]
         public JsonResult ListarRubros()
@@ -81,9 +89,6 @@ namespace TonerHP.Controllers
 
         }
         #endregion
-
-
-
 
         //PROVEEDORES
         #region PROVEEDORES
@@ -123,6 +128,7 @@ namespace TonerHP.Controllers
 
         }
         #endregion
+
         //TIPOS
         #region TIPOS
         [HttpGet]

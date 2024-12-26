@@ -18,16 +18,18 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("SELECT i.IdIngreso,");
-                    sb.AppendLine("p.IdProveedor, p.RazonSocial,");
-                    sb.AppendLine("prod.IdProducto, prod.Detalle, prod.StockActual,");
-                    sb.AppendLine("i.CodigoId,i.Cantidad,i.Observaciones,i.IdUsuario,i.TipoIngreso,i.FechaIngreso");
-                    sb.AppendLine("FROM Tonner_Ingresos i ");
-                    sb.AppendLine("inner join Tonner_Proveedor p on p.IdProveedor = i.IdProveedor");
-                    sb.AppendLine("inner join Tonner_Productos prod on prod.IdProducto = i.IdProducto ");
+                    string query = "SELECT * FROM FT_IngresoToner()";
+                    //StringBuilder sb = new StringBuilder();
+                    //sb.AppendLine("SELECT i.IdIngreso,");
+                    //sb.AppendLine("p.IdProveedor, p.RazonSocial,");
+                    //sb.AppendLine("prod.IdProducto, prod.Detalle, prod.StockActual,");
+                    //sb.AppendLine("i.CodigoId,i.Cantidad,i.Observaciones,i.IdUsuario,i.TipoIngreso,i.FechaIngreso");
+                    //sb.AppendLine("FROM Tonner_Ingresos i ");
+                    //sb.AppendLine("inner join Tonner_Proveedor p on p.IdProveedor = i.IdProveedor");
+                    //sb.AppendLine("inner join Tonner_Productos prod on prod.IdProducto = i.IdProducto ");
 
-                    SqlCommand cmd = new SqlCommand(sb.ToString(), oconexion);
+
+                    SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
                     using(SqlDataReader rdr = cmd.ExecuteReader())
@@ -36,9 +38,21 @@ namespace CapaDatos
                         {
                             lista.Add(new Ingresos()
                             {
-                                oProveedores = new Proveedores() { IdProveedor = Convert.ToInt32(rdr["IdProveedor"]), RazonSocial = rdr["RazonSocial"].ToString() },
-                                oProductos = new Productos() { IdProducto = Convert.ToInt32(rdr["IdProducto"]), Detalle = rdr["Detalle"].ToString() },
-                                oStockActual = new Productos() { IdProducto = Convert.ToInt32(rdr["IdProducto"]), StockActual = Convert.ToInt32(rdr["StockActual"]) },
+                                IdIngreso = Convert.ToInt32(rdr["IdIngreso"]),
+                                oProveedores = new Proveedores() { 
+                                    IdProveedor = Convert.ToInt32(rdr["IdProveedor"]), 
+                                    RazonSocial = rdr["RazonSocial"].ToString() 
+                                },
+                                oProductos = new Productos() { 
+                                    IdProducto = Convert.ToInt32(rdr["IdProducto"]), 
+                                    Detalle = rdr["Detalle"].ToString(),
+                                    //StockActual = Convert.ToInt32(rdr["StockActual"])
+                                },
+                                //oStockActual = new Productos()
+                                //{
+                                //    IdProducto = Convert.ToInt32(rdr["IdProducto"]),
+                                //    StockActual = Convert.ToInt32(rdr["StockActual"])
+                                //},
                                 CodigoId = rdr["CodigoId"].ToString(),
                                 Cantidad = Convert.ToInt32(rdr["Cantidad"]),
                                 Observaciones = rdr["Observaciones"].ToString(),
@@ -58,19 +72,19 @@ namespace CapaDatos
 
         public int Registrar(Ingresos obj)
         {
-            string Mensaje;
+            //string Mensaje;
             int idautogenerado = 0;
             using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
             {
                 SqlCommand cmd = new SqlCommand("T_InsertarIngresos", oconexion);
-                cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
                 cmd.Parameters.AddWithValue("IdProducto", obj.oProductos.IdProducto);
+                cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
+                cmd.Parameters.AddWithValue("Observaciones", (object)obj.Observaciones ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("CodigoId", (object)obj.CodigoId ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
-                cmd.Parameters.AddWithValue("CodigoId", obj.CodigoId);
-                cmd.Parameters.AddWithValue("Observaciones", obj.Observaciones);
-                cmd.Parameters.AddWithValue("TipoIngreso", obj.TipoIngreso);
                 cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
-                cmd.Parameters.AddWithValue("FechaIngreso", obj.FechaIngreso);
+                cmd.Parameters.AddWithValue("TipoIngreso", obj.TipoIngreso);
+                cmd.Parameters.AddWithValue("FechaIngreso", Convert.ToDateTime(obj.FechaIngreso));
                 cmd.Parameters.Add("resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                 //cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -89,29 +103,33 @@ namespace CapaDatos
         {
             bool resultado = false;
             Mensaje = string.Empty;
+            DateTime fechaactual = DateTime.MinValue;
             try
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("T_ModificarProductos", oconexion);
-                    cmd.Parameters.AddWithValue("IdIngresos", obj.IdIngreso);
+                    SqlCommand cmd = new SqlCommand("T_ModificarIngresos", oconexion);
+                    cmd.Parameters.AddWithValue("IdIngreso", obj.IdIngreso);
+                    cmd.Parameters.AddWithValue("IdProducto", obj.oProductos.IdProducto);
                     cmd.Parameters.AddWithValue("IdProveedor", obj.oProveedores.IdProveedor);
-                    cmd.Parameters.AddWithValue("IdTipo", obj.oProductos.IdProducto);
+                    cmd.Parameters.AddWithValue("Observaciones", (object)obj.Observaciones ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("CodigoId", (object)obj.CodigoId ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
-                    cmd.Parameters.AddWithValue("CodigoId", obj.CodigoId);
-                    cmd.Parameters.AddWithValue("Observaciones", obj.Observaciones);
-                    cmd.Parameters.AddWithValue("TipoIngreso", obj.CodigoId);
                     cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
-                    cmd.Parameters.AddWithValue("FechaIngreso", obj.FechaIngreso);
+                    cmd.Parameters.AddWithValue("TipoIngreso", obj.TipoIngreso);
+                    cmd.Parameters.AddWithValue("FechaIngreso", Convert.ToDateTime(obj.FechaIngreso));
+
                     cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("FechayHoraAct", SqlDbType.DateTime).Direction = ParameterDirection.Output;
+
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     oconexion.Open();
 
                     cmd.ExecuteNonQuery();
+                    fechaactual = Convert.ToDateTime(cmd.Parameters["FechayHoraAct"].Value);
                     resultado = Convert.ToBoolean(cmd.Parameters["Resultado"].Value);
-                    Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+
                 }
             }
             catch (Exception ex)
