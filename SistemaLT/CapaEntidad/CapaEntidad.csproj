@@ -48,6 +48,7 @@
     <Compile Include="Proveedores.cs" />
     <Compile Include="Rubros.cs" />
     <Compile Include="Tipos.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
