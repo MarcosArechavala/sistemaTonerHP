@@ -79,23 +79,21 @@ namespace TonerHP.Controllers
         #endregion
         [HttpPost]
 
-<<<<<<< HEAD
-        public JsonResult GuardarRubros(Rubros objeto)
-        {
-            object resultado;
-            string mensaje = string.Empty;
-=======
-        [HttpPost]
-        public JsonResult EliminarRubros(int id)
-        {
-            bool respuesta = false;
-            string mensaje = string.Empty;
-            respuesta = new CN_Rubros().Eliminar(id, out mensaje);
-            return Json(new { resultado = respuesta, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
->>>>>>> b265af2321636422da77fc594ef5084157934ee7
+        //public JsonResult GuardarRubros(Rubros objeto)
+        //{
+        //    object resultado;
+        //    string mensaje = string.Empty;
 
+            if (objeto.IdRubro == 0)
+            {
+                resultado = new CN_Rubros().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Rubros().Editar(objeto, out mensaje);
+            }
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
-        #endregion
 
         //PROVEEDORES
         #region PROVEEDORES
