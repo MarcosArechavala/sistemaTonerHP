@@ -57,8 +57,6 @@ namespace CapaDatos
                                 Cantidad = Convert.ToInt32(rdr["Cantidad"]),
                                 Observaciones = rdr["Observaciones"].ToString(),
                                 TipoIngreso = Convert.ToChar(rdr["TipoIngreso"]),
-                                IdUsuario = Convert.ToInt32(rdr["IdUsuario"]),
-                                FechaIngreso = rdr["FechaIngreso"].ToString(),
 
                             });
                         }
@@ -74,7 +72,7 @@ namespace CapaDatos
 
         public int Registrar(Ingresos obj)
         {
-            //string Mensaje;
+            string Mensaje;
             int idautogenerado = 0;
             using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
             {
